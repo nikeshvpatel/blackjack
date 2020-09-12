@@ -1,0 +1,43 @@
+body{
+  background: url("https://mk0gamesnetentcxytko.kinstacdn.com/wp-content/uploads/2018/09/blackjack_background.jpg")
+  /* background: url("https://newyorkcitypokertour.com/wp-content/uploads/2017/09/nyc_poker.jpg") center; */
+}
+
+table, th, td{
+  padding: 10px;
+  border: 3px solid red;
+}
+
+.container-1{
+  color: white;
+  margin: 0 auto;
+  text-align: center;
+}
+.flex-blackjack-row1, .flex-blackjack-row2, .flex-blackjack-row3{
+  display: flex;
+  border: 1px solid;
+  padding: 10px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.flex-blackjack-row1 div{
+text-align: center;
+  height: 400px;
+  flex: 1;
+}
+
+.flex-blackjack-row1 img{
+  width: 25%;
+  padding: 10px;
+}
+
+.flex-blackjack-row2 div{
+  padding: 10px;
+}
+
+.flex-blackjack-row2 button{
+  border: 1px solid;
+  padding: 10px;
+}
