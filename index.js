@@ -1,3 +1,9 @@
+document.querySelector("#play").addEventListener("click", howto)
+
+function howto() {
+  alert("Points card:\n A: 1 or 11 \n 2: 2,…,5: 5,…,(10,J,Q,K): 10.\n\n DEALER will play Automatically while you press 'STAND' button. \n\n How 'YOU' wins? \n 1.	YOU get closer to 21 than dealer, but not going over 21. \n\n How 'DEALER' wins? \n 1.	DEALER gets closer to 21 than you, but not going over 21. \n 2.	YOU go over 21. \n");
+}
+
 let blackjackGame = {
   "You": {
     "scoreSpan": "#your-blackjack-result",
@@ -37,6 +43,7 @@ const winSound = new Audio("sounds/cash.mp3");
 const lossSound = new Audio("sounds/aww.mp3");
 const YOU = blackjackGame["You"];
 const DEALER = blackjackGame["Dealer"]
+const button = document.querySelector('#blackjack-Stand-button');
 document.querySelector("#blackjack-Hit-button").addEventListener("click", blackjackHit);
 document.querySelector("#blackjack-Stand-button").addEventListener("click", dealerLogic);
 document.querySelector("#blackjack-Deal-button").addEventListener("click", blackjackDeal);
@@ -47,6 +54,7 @@ function blackjackHit() {
     showCard(card, YOU);
     updateScore(card, YOU);
     showScore(YOU);
+    button.disabled= false;
   }
 }
 
@@ -88,6 +96,7 @@ function blackjackDeal() {
     document.querySelector("#blackjack-result").textContent = "Let's Play!"
     document.querySelector("#blackjack-result").style.color = "white";
     blackjackGame["turnsOver"] = true;
+
   }
 }
 
@@ -112,22 +121,24 @@ function showScore(activePlayer) {
   }
 }
 
-function sleep(ms){
+function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 async function dealerLogic() {
+  // button.disabled = false;
   blackjackGame["isStand"] = true;
   while (DEALER["score"] < 16 && blackjackGame["isStand"] === true) {
     var card = randomCard();
     showCard(card, DEALER);
     updateScore(card, DEALER);
     showScore(DEALER);
-    await sleep (1000);
+    await sleep(1000);
   }
 
-    blackjackGame["turnsOver"] = true;
-    showResult(computeWinner());
+  blackjackGame["turnsOver"] = true;
+  showResult(computeWinner());
+  button.disabled = true;
 }
 
 function computeWinner() {
@@ -139,22 +150,26 @@ function computeWinner() {
     if (YOU["score"] > DEALER["score"] || DEALER["score"] > 21) {
       blackjackGame["wins"]++;
       winner = YOU;
+
     } else if (YOU["score"] < DEALER["score"]) {
       blackjackGame["losses"]++;
       winner = DEALER;
+
     } else if (YOU["score"] === DEALER["score"]) {
       blackjackGame["draws"]++;
-
     }
   } // When User Busted but Dealer is not
   else if (YOU["score"] > 21 && DEALER["score"] <= 21) {
     blackjackGame["losses"]++;
     winner = DEALER;
+
   }
   //When you and Dealer both busted
   else if (YOU["score"] > 21 && DEALER["score"] > 21) {
     blackjackGame["draws"]++;
   }
+  // blackjackGame["isStand"] = false;
+  // blackjackGame["turnsOver"] = false;
   return winner;
 }
 
@@ -182,4 +197,5 @@ function showResult(winner) {
     document.querySelector("#blackjack-result").textContent = message;
     document.querySelector("#blackjack-result").style.color = messageColor;
   }
+
 }
