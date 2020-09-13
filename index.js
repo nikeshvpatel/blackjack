@@ -128,7 +128,8 @@ function sleep(ms) {
 async function dealerLogic() {
   // button.disabled = false;
   blackjackGame["isStand"] = true;
-  while (DEALER["score"] < 16 && blackjackGame["isStand"] === true) {
+  while (DEALER["score"] < 15 && blackjackGame["isStand"] === true) {
+    button.disabled=true;
     var card = randomCard();
     showCard(card, DEALER);
     updateScore(card, DEALER);
